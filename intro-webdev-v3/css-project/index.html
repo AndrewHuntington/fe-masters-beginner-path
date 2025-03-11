@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <title>CSS Project</title>
+  </head>
+  <body>
+    <header class="page-header">
+      <img class="page-logo" src="coffee_masters_logo.png" alt="logo" />
+      <h1 class="page-title">Coffee Masters</h1>
+    </header>
+
+    <div class="col-wrapper">
+      <div class="col-1">
+        <h2 class="row-items-header">ITEMS</h2>
+        <div class="col-1-items-wrapper">
+          <div class="items-row">
+            <div class="item-number">1x</div>
+            <div class="item-name">Cappuccino</div>
+            <div class="item-amount">$6.00</div>
+            <div class="options">
+              <div class="items-subitem">Light Foam</div>
+            </div>
+          </div>
+          <div class="items-row">
+            <div class="item-number">1x</div>
+            <div class="item-name">Cappuccino</div>
+            <div class="item-amount">$7.90</div>
+            <div class="options">
+              <div class="items-subitem">Almond Milk</div>
+              <div class="items-subitem">Double Espresso Shot</div>
+            </div>
+          </div>
+          <div class="items-row">
+            <div class="item-number">1x</div>
+            <div class="item-name">Croissant</div>
+            <div class="item-amount">$5.37</div>
+            <div class="options">
+              <div class="items-subitem">Butter</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-2">
+        <div class="row-name">
+          <h2 class="row-name-header">NAME</h2>
+          <div class="name-input-wrapper">
+            <label for="name" class="name-input-label">Name for order</label>
+            <input class="name-input" id="name" type="text" />
+          </div>
+        </div>
+        <div class="row-payment">
+          <h2 class="row-payment-header">PAYMENT</h2>
+          <div class="card-num-input-wrapper">
+            <label for="name" class="card-num-input-label">Card number</label>
+            <input class="card-num-input" id="name" type="text" />
+          </div>
+          <div class="CCV-input-wrapper">
+            <label for="name" class="CCV-input-label">CCV number</label>
+            <input class="CCV-input" id="name" type="text" />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="amount-display-wrapper">
+      <div class="amount-display-grid">
+        <div>Subtotal:</div>
+        <div>$9.65</div>
+        <div>Tax:</div>
+        <div>$0.82</div>
+        <div class="bold">Total:</div>
+        <div class="bold">$10.47</div>
+      </div>
+    </div>
+    <div class="btn-wrapper">
+      <div class="fake-btn">Place order</div>
+    </div>
+  </body>
+</html>
