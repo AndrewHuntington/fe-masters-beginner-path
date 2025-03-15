@@ -1,7 +1,8 @@
 // setup values
 let displayNumber = 0; // number to display to the user
 let total = 0; // background total; may differ from what is currently displayed
-let lastOperand = null;
+let lastOperator = null;
+let currentOperand;
 const display = document.querySelector(".number-display");
 display.innerHTML = displayNumber;
 
@@ -19,6 +20,7 @@ function updateDisplay(value) {
     display.innerHTML += value;
   }
   displayNumber = +display.innerHTML;
+  currentOperand = displayNumber;
 }
 
 function backspace() {
@@ -37,35 +39,47 @@ function backspace() {
 }
 
 function add() {
-  total += +displayNumber;
+  total += displayNumber;
   // TODO: maybe improve this
   displayNumber = 0;
   display.innerHTML = displayNumber;
-  lastOperand = "+";
+  lastOperator = "+";
 }
 
 function subtract() {}
 
 function divide() {}
 
-function multiply() {}
-
-function equals() {
-  if (!lastOperand) return;
-
-  if (lastOperand === "+") {
+function multiply() {
+  if (total === 0) {
     total += displayNumber;
-  }
-
-  if (lastOperand === "-") {
-    total -= displayNumber;
-  }
-
-  if (lastOperand === "*") {
+  } else {
     total *= displayNumber;
   }
 
-  if (lastOperand === "/") {
+  console.log({ total, displayNumber });
+  // TODO: maybe improve this
+  displayNumber = 0;
+  display.innerHTML = displayNumber;
+  lastOperator = "*";
+}
+
+function equals() {
+  if (!lastOperator) return;
+
+  if (lastOperator === "+") {
+    total += displayNumber;
+  }
+
+  if (lastOperator === "-") {
+    total -= displayNumber;
+  }
+
+  if (lastOperator === "*") {
+    total *= currentOperand;
+  }
+
+  if (lastOperator === "/") {
     total /= displayNumber;
   }
 
