@@ -1,9 +1,7 @@
 // setup values
 let displayNumber = 0; // number to display to the user
 let total = 0; // background total; may differ from what is currently displayed
-let operator,
-  operandA,
-  operandB = null;
+const inputHistory = [];
 const display = document.querySelector(".number-display");
 display.innerHTML = displayNumber;
 
@@ -47,7 +45,19 @@ function divide() {}
 
 function multiply() {}
 
-function equals() {}
+function equals() {
+  inputHistory.push(displayNumber);
+  console.log(inputHistory);
+
+  if (inputHistory.includes("+")) {
+    total = inputHistory[0] + inputHistory[2];
+    displayNumber = total;
+    display.innerHTML = displayNumber;
+  }
+
+  inputHistory.length = 0;
+  console.log("after", inputHistory);
+}
 
 // setup calculator event handlers
 const calc = document.querySelector(".calculator");
@@ -68,6 +78,23 @@ Array.from(calc.children).forEach((e) => {
         break;
       case "plus":
         // add
+
+        // make into reusable function
+        inputHistory.push(displayNumber);
+        if (inputHistory.includes("+")) {
+          total = inputHistory[0] + inputHistory[2];
+          displayNumber = total;
+          display.innerHTML = displayNumber;
+
+          inputHistory.length = 0;
+          inputHistory.push(total);
+          inputHistory.push("+");
+        } else {
+          inputHistory.push("+");
+        }
+
+        displayNumber = 0;
+        display.innerHTML = displayNumber;
         break;
       case "minus":
         // sub
