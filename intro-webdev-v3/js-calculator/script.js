@@ -1,12 +1,11 @@
-// number to display to the user
-let displayNumber = 0;
-// background total; may differ from what is currently displayed
-let total = 0;
+// setup values
+let displayNumber = 0; // number to display to the user
+let total = 0; // background total; may differ from what is currently displayed
 let lastOperand = null;
-
 const display = document.querySelector(".number-display");
 display.innerHTML = displayNumber;
 
+// functions
 function clear() {
   total = 0;
   displayNumber = 0;
@@ -22,15 +21,34 @@ function updateDisplay(value) {
   displayNumber = +display.innerHTML;
 }
 
+function backspace() {
+  if (display.innerHTML === "0") return;
+
+  if (display.innerHTML.length > 1) {
+    display.innerHTML = display.innerHTML.slice(
+      0,
+      display.innerHTML.length - 1
+    );
+  } else {
+    display.innerHTML = "0";
+  }
+
+  return;
+}
+
 function add() {
   total += +displayNumber;
-  // TODO: bug here
+  // TODO: maybe improve this
   displayNumber = 0;
   display.innerHTML = displayNumber;
   lastOperand = "+";
-
-  // console.log({ total });
 }
+
+function subtract() {}
+
+function divide() {}
+
+function multiply() {}
 
 function equals() {
   if (!lastOperand) return;
@@ -51,11 +69,12 @@ function equals() {
     total /= displayNumber;
   }
 
-  // console.log({ total });
+  console.log("eq", { total });
   displayNumber = total;
   display.innerHTML = displayNumber;
 }
 
+// setup calculator event handlers
 const calc = document.querySelector(".calculator");
 Array.from(calc.children).forEach((e) => {
   if (e.className === "display") return;
@@ -69,8 +88,20 @@ Array.from(calc.children).forEach((e) => {
       case "clear":
         clear();
         break;
+      case "back":
+        backspace();
+        break;
       case "plus":
-        add(enteredValue);
+        add();
+        break;
+      case "minus":
+        subtract();
+        break;
+      case "divide":
+        divide();
+        break;
+      case "multiply":
+        multiply();
         break;
       case "equal":
         equals();
