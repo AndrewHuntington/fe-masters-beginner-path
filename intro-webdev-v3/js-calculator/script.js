@@ -1,8 +1,9 @@
 // setup values
 let displayNumber = 0; // number to display to the user
 let total = 0; // background total; may differ from what is currently displayed
-let lastOperator = null;
-let currentOperand;
+let operator,
+  operandA,
+  operandB = null;
 const display = document.querySelector(".number-display");
 display.innerHTML = displayNumber;
 
@@ -20,7 +21,6 @@ function updateDisplay(value) {
     display.innerHTML += value;
   }
   displayNumber = +display.innerHTML;
-  currentOperand = displayNumber;
 }
 
 function backspace() {
@@ -38,55 +38,16 @@ function backspace() {
   return;
 }
 
-function add() {
-  total += displayNumber;
-  // TODO: maybe improve this
-  displayNumber = 0;
-  display.innerHTML = displayNumber;
-  lastOperator = "+";
-}
+// operations
+function add() {}
 
 function subtract() {}
 
 function divide() {}
 
-function multiply() {
-  if (total === 0) {
-    total += displayNumber;
-  } else {
-    total *= displayNumber;
-  }
+function multiply() {}
 
-  console.log({ total, displayNumber });
-  // TODO: maybe improve this
-  displayNumber = 0;
-  display.innerHTML = displayNumber;
-  lastOperator = "*";
-}
-
-function equals() {
-  if (!lastOperator) return;
-
-  if (lastOperator === "+") {
-    total += displayNumber;
-  }
-
-  if (lastOperator === "-") {
-    total -= displayNumber;
-  }
-
-  if (lastOperator === "*") {
-    total *= currentOperand;
-  }
-
-  if (lastOperator === "/") {
-    total /= displayNumber;
-  }
-
-  console.log("eq", { total });
-  displayNumber = total;
-  display.innerHTML = displayNumber;
-}
+function equals() {}
 
 // setup calculator event handlers
 const calc = document.querySelector(".calculator");
@@ -96,7 +57,7 @@ Array.from(calc.children).forEach((e) => {
   e.addEventListener("click", (e) => {
     const op = e.target.className.split(" ")[0];
     const enteredValue = e.target.innerHTML;
-    console.log(e.target.innerHTML);
+    console.log({ enteredValue });
 
     switch (op) {
       case "clear":
@@ -106,16 +67,16 @@ Array.from(calc.children).forEach((e) => {
         backspace();
         break;
       case "plus":
-        add();
+        // add
         break;
       case "minus":
-        subtract();
+        // sub
         break;
       case "divide":
-        divide();
+        // div
         break;
       case "multiply":
-        multiply();
+        // multi
         break;
       case "equal":
         equals();
