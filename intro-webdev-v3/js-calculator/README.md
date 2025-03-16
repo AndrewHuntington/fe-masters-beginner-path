@@ -6,7 +6,9 @@ My solution to the JavaScript calculator project from the Intro to Web Dev v3 co
 
 ### Final Product
 
-<video src="./calc_rec.mov" controls width="600" height="400"></video>
+![Final Product](./final.png)
+
+[Video download](./calc_rec.mov)
 
 ### Task Requirements
 
