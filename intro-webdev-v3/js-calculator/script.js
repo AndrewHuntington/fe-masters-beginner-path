@@ -1,4 +1,4 @@
-// setup values
+// setup values / initiate global variables
 let displayNumber = 0; // number to display to the user
 let total = 0; // background total; may differ from what is currently displayed
 const inputHistory = [];
@@ -36,18 +36,8 @@ function backspace() {
   return;
 }
 
-// operations
-function add() {}
-
-function subtract() {}
-
-function divide() {}
-
-function multiply() {}
-
 function equals() {
   inputHistory.push(displayNumber);
-  // console.log(inputHistory);
 
   if (inputHistory.includes("+")) {
     total = inputHistory[0] + inputHistory[2];
@@ -61,15 +51,60 @@ function equals() {
     display.innerHTML = displayNumber;
   }
 
-  // TODO: expand to include / and *
+  if (inputHistory.includes("/")) {
+    total = inputHistory[0] / inputHistory[2];
+    displayNumber = total;
+    display.innerHTML = displayNumber;
+  }
+
+  if (inputHistory.includes("*")) {
+    total = inputHistory[0] * inputHistory[2];
+    displayNumber = total;
+    display.innerHTML = displayNumber;
+  }
 
   inputHistory.length = 0;
-  // console.log("after", inputHistory);
 }
 
 function includesOperator() {
   const operators = /[+\-*/]/;
   return inputHistory.some((item) => operators.test(item));
+}
+
+function handleOperation(operator) {
+  inputHistory.push(displayNumber);
+  if (includesOperator()) {
+    doMath();
+  }
+
+  inputHistory.push(operator);
+
+  displayNumber = 0;
+  display.innerHTML = displayNumber;
+}
+
+function doMath() {
+  if (inputHistory.includes("+")) {
+    total = inputHistory[0] + inputHistory[2];
+  }
+
+  if (inputHistory.includes("-")) {
+    total = inputHistory[0] - inputHistory[2];
+  }
+
+  if (inputHistory.includes("*")) {
+    total = inputHistory[0] * inputHistory[2];
+  }
+
+  if (inputHistory.includes("/")) {
+    total = inputHistory[0] / inputHistory[2];
+  }
+
+  displayNumber = total;
+  display.innerHTML = displayNumber;
+
+  inputHistory.length = 0;
+  inputHistory.push(total);
 }
 
 // setup calculator event handlers
@@ -91,61 +126,19 @@ Array.from(calc.children).forEach((e) => {
         break;
       case "plus":
         // add
-
-        // TODO: make into reusable function
-        inputHistory.push(displayNumber);
-        if (includesOperator()) {
-          if (inputHistory.includes("+")) {
-            total = inputHistory[0] + inputHistory[2];
-          }
-
-          if (inputHistory.includes("-")) {
-            total = inputHistory[0] - inputHistory[2];
-          }
-
-          displayNumber = total;
-          display.innerHTML = displayNumber;
-
-          inputHistory.length = 0;
-          inputHistory.push(total);
-        }
-
-        inputHistory.push("+");
-
-        displayNumber = 0;
-        display.innerHTML = displayNumber;
+        handleOperation("+");
         break;
       case "minus":
         // sub
-
-        // TODO: make into reusable function
-        inputHistory.push(displayNumber);
-        if (includesOperator()) {
-          if (inputHistory.includes("+")) {
-            total = inputHistory[0] + inputHistory[2];
-          }
-
-          if (inputHistory.includes("-")) {
-            total = inputHistory[0] - inputHistory[2];
-          }
-
-          displayNumber = total;
-          display.innerHTML = displayNumber;
-
-          inputHistory.length = 0;
-          inputHistory.push(total);
-        }
-
-        inputHistory.push("-");
-
-        displayNumber = 0;
-        display.innerHTML = displayNumber;
+        handleOperation("-");
         break;
       case "divide":
         // div
+        handleOperation("/");
         break;
       case "multiply":
         // multi
+        handleOperation("*");
         break;
       case "equal":
         equals();
