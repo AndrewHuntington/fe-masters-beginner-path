@@ -47,7 +47,7 @@ function multiply() {}
 
 function equals() {
   inputHistory.push(displayNumber);
-  console.log(inputHistory);
+  // console.log(inputHistory);
 
   if (inputHistory.includes("+")) {
     total = inputHistory[0] + inputHistory[2];
@@ -55,8 +55,21 @@ function equals() {
     display.innerHTML = displayNumber;
   }
 
+  if (inputHistory.includes("-")) {
+    total = inputHistory[0] - inputHistory[2];
+    displayNumber = total;
+    display.innerHTML = displayNumber;
+  }
+
+  // TODO: expand to include / and *
+
   inputHistory.length = 0;
-  console.log("after", inputHistory);
+  // console.log("after", inputHistory);
+}
+
+function includesOperator() {
+  const operators = /[+\-*/]/;
+  return inputHistory.some((item) => operators.test(item));
 }
 
 // setup calculator event handlers
@@ -79,25 +92,54 @@ Array.from(calc.children).forEach((e) => {
       case "plus":
         // add
 
-        // make into reusable function
+        // TODO: make into reusable function
         inputHistory.push(displayNumber);
-        if (inputHistory.includes("+")) {
-          total = inputHistory[0] + inputHistory[2];
+        if (includesOperator()) {
+          if (inputHistory.includes("+")) {
+            total = inputHistory[0] + inputHistory[2];
+          }
+
+          if (inputHistory.includes("-")) {
+            total = inputHistory[0] - inputHistory[2];
+          }
+
           displayNumber = total;
           display.innerHTML = displayNumber;
 
           inputHistory.length = 0;
           inputHistory.push(total);
-          inputHistory.push("+");
-        } else {
-          inputHistory.push("+");
         }
+
+        inputHistory.push("+");
 
         displayNumber = 0;
         display.innerHTML = displayNumber;
         break;
       case "minus":
         // sub
+
+        // TODO: make into reusable function
+        inputHistory.push(displayNumber);
+        if (includesOperator()) {
+          if (inputHistory.includes("+")) {
+            total = inputHistory[0] + inputHistory[2];
+          }
+
+          if (inputHistory.includes("-")) {
+            total = inputHistory[0] - inputHistory[2];
+          }
+
+          displayNumber = total;
+          display.innerHTML = displayNumber;
+
+          inputHistory.length = 0;
+          inputHistory.push(total);
+        }
+
+        inputHistory.push("-");
+
+        displayNumber = 0;
+        display.innerHTML = displayNumber;
         break;
       case "divide":
         // div
