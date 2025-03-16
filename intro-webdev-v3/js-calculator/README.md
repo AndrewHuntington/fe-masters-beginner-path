@@ -1,4 +1,4 @@
-# Intro to Web Dev C3
+# Intro to Web Dev V3
 
 ## JS Project: Calculator
 
