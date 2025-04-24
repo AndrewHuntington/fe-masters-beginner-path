@@ -13,17 +13,36 @@ async function getWordOfTheDay() {
   return data.word.toUpperCase();
 }
 
+async function validateWord(guess) {
+  const word = guess.join("");
+  document.querySelector(".loader").classList.remove("hidden");
+
+  const response = await fetch("https://words.dev-apis.com/validate-word", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ word }),
+  });
+
+  const result = await response.json();
+  document.querySelector(".loader").classList.add("hidden");
+
+  return result.validWord;
+}
+
 async function init() {
   let row = 0;
   let offset = 0;
   let currentGuess = [];
   const gameBoard = document.querySelector(".game-wrapper");
-  const winningWord = await getWordOfTheDay();
-  // console.log({ winningWord });
+  const wordOfTheDay = await getWordOfTheDay();
+  let isValidWord = false;
+  console.log({ wordOfTheDay });
 
   gameBoard.setAttribute("tabindex", "0");
 
-  gameBoard.addEventListener("keydown", (e) => {
+  gameBoard.addEventListener("keydown", async (e) => {
     // handle 'Backspace'
     if (e.key === "Backspace") {
       if (currentGuess.length > 0) {
@@ -38,11 +57,15 @@ async function init() {
     // handle 'Enter'
     if (e.key === "Enter") {
       if (currentGuess.length === 5 && row < 6) {
-        currentGuess = [];
-        row++;
-        offset = row * 5;
+        isValidWord = await validateWord(currentGuess);
 
-        // TODO: handle word comparison
+        if (isValidWord) {
+          currentGuess = [];
+          row++;
+          offset = row * 5;
+
+          // TODO: handle word comparison
+        }
       } else {
         e.preventDefault();
       }
