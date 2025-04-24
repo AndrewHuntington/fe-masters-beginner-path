@@ -59,7 +59,20 @@ body {
   font-weight: 700;
 }
 
-/* TODO: Style box for wrong, close, and correct letters */
+.green-box {
+  color: white;
+  background-color: green;
+}
+
+.orange-box {
+  color: white;
+  background-color: rgb(218, 167, 73);
+}
+
+.grey-box {
+  color: white;
+  background-color: gray;
+}
 
 .hidden {
   visibility: hidden;
