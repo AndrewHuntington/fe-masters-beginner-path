@@ -1,3 +1,11 @@
+// Global Variables
+let row = 0;
+let offset = 0;
+let currentGuess = [];
+const gameBoard = document.querySelector(".game-wrapper");
+let isValidWord = false;
+let gameOver = false;
+
 function isLetter(letter) {
   return /^[a-zA-Z]$/.test(letter);
 }
@@ -31,18 +39,49 @@ async function validateWord(guess) {
   return result.validWord;
 }
 
+function compareWords(currentGuess = [], wordOfTheDay = "") {
+  if (currentGuess.join("") === wordOfTheDay) {
+    alert("You win!");
+    gameOver = true;
+  }
+
+  // First, set all boxes to gray (character not in answer)
+  for (let i = 0; i < 5; i++) {
+    document.querySelector(`.box-${i + offset}`).classList.add("grey-box");
+  }
+
+  // Next, if characters are in answer, replace gray with appropriate color
+  for (let index = 0; index < 5; index++) {
+    // If the player guesses a letter that is in the right place, it is shown as green
+    if (currentGuess[index] === wordOfTheDay[index]) {
+      document
+        .querySelector(`.box-${index + offset}`)
+        .classList.replace("grey-box", "green-box");
+
+      continue;
+    }
+
+    // If the player guesses a letter that is in the word but not in the right place, it is shown as yellow
+    // It does account for however many of the letter exist in the word
+    if (currentGuess.includes(wordOfTheDay[index])) {
+      const i = currentGuess.indexOf(wordOfTheDay[index]);
+
+      console.log(i + offset);
+      document
+        .querySelector(`.box-${i + offset}`)
+        .classList.replace("grey-box", "orange-box");
+    }
+  }
+}
+
 async function init() {
-  let row = 0;
-  let offset = 0;
-  let currentGuess = [];
-  const gameBoard = document.querySelector(".game-wrapper");
   const wordOfTheDay = await getWordOfTheDay();
-  let isValidWord = false;
-  console.log({ wordOfTheDay });
 
   gameBoard.setAttribute("tabindex", "0");
 
   gameBoard.addEventListener("keydown", async (e) => {
+    if (gameOver) return;
+
     // handle 'Backspace'
     if (e.key === "Backspace") {
       if (currentGuess.length > 0) {
@@ -60,11 +99,17 @@ async function init() {
         isValidWord = await validateWord(currentGuess);
 
         if (isValidWord) {
+          // TODO: handle word comparison
+          compareWords(currentGuess, wordOfTheDay);
+
           currentGuess = [];
           row++;
           offset = row * 5;
 
-          // TODO: handle word comparison
+          if (row === 6 && !gameOver) {
+            alert(`You lose! The word was: ${wordOfTheDay}`);
+            gameOver = true;
+          }
         }
       } else {
         e.preventDefault();
