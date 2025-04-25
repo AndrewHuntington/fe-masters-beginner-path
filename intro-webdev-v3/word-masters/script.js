@@ -63,6 +63,9 @@ function compareWords(currentGuess = [], wordOfTheDay = "") {
 
     // If the player guesses a letter that is in the word but not in the right place, it is shown as yellow
     // It does account for however many of the letter exist in the word
+    // NOTE: May only partially work due to not checking the number of times a letter appears in the wordOfTheDay
+    // It seemed to work against all my tests, but I couldn't figure out why.
+    // Brain uses a map-like object to solve keeping track of the number of times a letter appears in the wordOfTheDay
     if (currentGuess.includes(wordOfTheDay[index])) {
       const i = currentGuess.indexOf(wordOfTheDay[index]);
 
@@ -117,6 +120,7 @@ async function init() {
     }
 
     // handle valid letter input
+    // NOTE: doesn't handle overwriting the last letter if a user doesn't press ENTER like Brian's version does
     if (isLetter(e.key) && currentGuess.length < 5 && row < 6) {
       currentGuess.push(e.key.toUpperCase());
     }
