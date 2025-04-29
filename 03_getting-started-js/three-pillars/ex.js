@@ -1,43 +1,46 @@
-class Bookshelf {
-	constructor() {
-		this.favoriteBooks = [];
-	}
+// * NOTE:
+// * These are my answers.
+// * The README and `ex.fixed.js` files in this directory where provided by the instructor.
 
-	// TODO: define methods `addFavoriteBook(..)`
-	// and `printFavoriteBooks()`
+class Bookshelf {
+  constructor() {
+    this.favoriteBooks = [];
+  }
+
+  // TODO: define methods `addFavoriteBook(..)`
+  // and `printFavoriteBooks()`
 }
 
 function addFavoriteBook(bookName) {
-	if (!bookName.includes("Great")) {
-		favoriteBooks.push(bookName);
-	}
+  if (!bookName.includes("Great")) {
+    favoriteBooks.push(bookName);
+  }
 }
 
 function printFavoriteBooks() {
-	console.log(`Favorite Books: ${favoriteBooks.length}`);
-	for (let bookName of favoriteBooks) {
-		console.log(bookName);
-	}
+  console.log(`Favorite Books: ${favoriteBooks.length}`);
+  for (let bookName of favoriteBooks) {
+    console.log(bookName);
+  }
 }
 
-function loadBooks( /* .. */ ) {
-	// TODO: call fakeAjax( .. );
+function loadBooks(/* .. */) {
+  // TODO: call fakeAjax( .. );
 }
 
 var BOOK_API = "https://some.url/api";
 
-
 // ***********************
 
 // NOTE: don't modify this function at all
-function fakeAjax(url,cb) {
-	setTimeout(function fakeLoadingDelay(){
-		cb([
-			"A Song of Ice and Fire",
-			"The Great Gatsby",
-			"Crime & Punishment",
-			"Great Expectations",
-			"You Don't Know JS"
-		]);
-	},500);
+function fakeAjax(url, cb) {
+  setTimeout(function fakeLoadingDelay() {
+    cb([
+      "A Song of Ice and Fire",
+      "The Great Gatsby",
+      "Crime & Punishment",
+      "Great Expectations",
+      "You Don't Know JS",
+    ]);
+  }, 500);
 }
